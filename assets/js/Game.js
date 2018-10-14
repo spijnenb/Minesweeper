@@ -2,14 +2,10 @@ class Game {
 	constructor(difficulty) {
 		if (difficulty === "easy") {
 			this.minefield = this.buildMinefield(5);
-			for (let i = 0; i < 3; i++) {
-				this.plantBomb();
-			}
+			this.plantBomb(3);			
 		} else if (difficulty === "hard") {
 			this.minefield = this.buildMinefield(10);
-			for (let i = 0; i < 10; i++) {
-				this.plantBomb();
-			}
+			this.plantBomb(10);
 		}
 	}
 
@@ -25,44 +21,45 @@ class Game {
 		return minefield;
 	}
 
-	plantBomb() {
+	plantBomb(numBombs) {
 		let max = this.minefield.length - 1;
 		let min = 0;
+		for (let i = 0; i < numBombs; i++) {
+			// pick random number between min and max (inclusive)
+			let rngRow = Math.floor(Math.random() * (max - min + 1) + min);
+			let rngColumn = Math.floor(Math.random() * (max - min + 1) + min);
 
-		// pick random number between min and max (inclusive)
-		let rngRow = Math.floor(Math.random() * (max - min + 1) + min);
-		let rngColumn = Math.floor(Math.random() * (max - min + 1) + min);
+			// place mine
+			if (this.minefield[rngRow][rngColumn] < 1000) {
+				this.minefield[rngRow][rngColumn] = 1000;
 
-		// place mine
-		if (this.minefield[rngRow][rngColumn] < 1000) {
-			this.minefield[rngRow][rngColumn] = 1000;
+				// place markers
+				if (rngRow > 0) {
+					this.minefield[rngRow - 1][rngColumn]++;				// top
+					if (rngColumn > 0) {
+						this.minefield[rngRow - 1][rngColumn - 1]++;		// top left
+					}
+					if (rngColumn < max) {
+						this.minefield[rngRow - 1][rngColumn + 1]++;		// top right	
+					}
+				}
 
-			// place markers
-			if (rngRow > 0) {
-				this.minefield[rngRow - 1][rngColumn]++;				// top
 				if (rngColumn > 0) {
-					this.minefield[rngRow - 1][rngColumn - 1]++;		// top left
+					this.minefield[rngRow][rngColumn - 1]++;				// left
 				}
+				
 				if (rngColumn < max) {
-					this.minefield[rngRow - 1][rngColumn + 1]++;		// top right	
+					this.minefield[rngRow][rngColumn + 1]++;				// right
 				}
-			}
 
-			if (rngColumn > 0) {
-				this.minefield[rngRow][rngColumn - 1]++;				// left
-			}
-			
-			if (rngColumn < max) {
-				this.minefield[rngRow][rngColumn + 1]++;				// right
-			}
-
-			if (rngRow < max) {
-				this.minefield[rngRow + 1][rngColumn]++;				// bottom
-				if (rngColumn > 0) {
-					this.minefield[rngRow + 1][rngColumn - 1]++;		// bottom left
-				}
-				if (rngColumn < max) {
-					this.minefield[rngRow + 1][rngColumn + 1]++;		// bottom right
+				if (rngRow < max) {
+					this.minefield[rngRow + 1][rngColumn]++;				// bottom
+					if (rngColumn > 0) {
+						this.minefield[rngRow + 1][rngColumn - 1]++;		// bottom left
+					}
+					if (rngColumn < max) {
+						this.minefield[rngRow + 1][rngColumn + 1]++;		// bottom right
+					}
 				}
 			}
 		}
@@ -102,19 +99,15 @@ class Game {
 
 	/**
 	 * Get relative value in matrix including row and column index
-	 * @param {*} row 
-	 * @param {*} col 
+	 * @param object value, row, column
+	 * @param direction String top, bottom, left, right
 	 * @return object with value, row, column
 	 */
 
-	getRelativeCellObject(row, col, direction) {
-		row = Number(row);
-		col = Number(col);
-
-		if (typeof row != "number" || typeof col != "number") {
-			throw Error("Something went wrong");
-		}
+	getRelativeCellObject(currentCell, direction) {
 		direction = direction.toLowerCase();
+		let row = currentCell.row;
+		let col = currentCell.col;
 		let relativeRow = row;
 		let relativeCol = col;
 
@@ -144,5 +137,23 @@ class Game {
 		} 
 
 		return {value: this.minefield[relativeRow][relativeCol], row: relativeRow, col: relativeCol}
+	}
+
+	findEmptyNeighbors(currentCell) {
+		let emptyNeighbors = [];
+		let neighborhood = [
+			this.getRelativeCellObject(currentCell, "top"),
+			this.getRelativeCellObject(currentCell, "bottom"),
+			this.getRelativeCellObject(currentCell, "left"),
+			this.getRelativeCellObject(currentCell, "right")
+		]
+	
+		neighborhood.forEach(function(neighbor){
+			if (neighbor && neighbor.value === 0) {
+				emptyNeighbors.push(neighbor);
+			}
+		});
+	
+		return emptyNeighbors;
 	}
 }

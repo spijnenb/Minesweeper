@@ -27,3 +27,15 @@ class Queue {
 		return this.data.length;
 	}
 }
+
+// let q = new Queue();
+
+// q.add(1);
+// q.add(2);
+// q.add(3);
+
+// console.log(q.data);
+
+// q.remove();
+
+// console.log(q.data);

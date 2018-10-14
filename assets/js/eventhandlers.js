@@ -11,43 +11,71 @@ newGameButton.addEventListener("click", function(){
 
 	let tds = Array.from(matrix.querySelectorAll("td"));
 	tds.forEach(function(td){
-		td.addEventListener("click", function(){
-			// get row and column
-			let rowID = td.parentElement.id.substr(3);
-			let columnID = td.id.substr(3);
-			// get value from array
-			let value = game.getValue(rowID, columnID);
-			if (value >= 1000) {
+		td.addEventListener("click", function(){		// todo make separate function
+			// create cell obj
+			let cell = {};
+			cell.row = Number(td.parentElement.id.substr(3));
+			cell.col = Number(td.id.substr(3));
+			cell.value = Number(game.getValue(cell.row, cell.col));
+
+			// if bomb then place icon
+			if (cell.value >= 1000) {
 				td.innerHTML = `<i class="fas fa-bomb"></i>`;
 			} else {
-				td.innerText = value;
+				td.innerText = cell.value;
 			}
+
 			// if 0, then clear empty part of minefield
-			if (value == 0) {
-				clearMinefield(rowID, columnID, game);
+			if (cell.value === 0) {
+				let emptyCells = findConnectedEmptyCells(cell, game);
+
+				emptyCells.forEach(function(cell){
+					let currentCell = matrix.querySelector("#row" + cell.row).querySelector("#col" + cell.col);
+					currentCell.innerText = cell.value;
+					currentCell.bgColor = "yellow";		// todo change this
+				});
 			}
 			// remove click event
 		});
 	});
 });
 
-
-function clearMinefield(rowID, columnID, game) {
+function findConnectedEmptyCells(currentCell, game) {
 	let queue = new Queue();
-	// get current cell
-	let currentValue = game.getValue(rowID, columnID);
-
-	// add neighbors to queue
-	queue.add(game.getRelativeCellObject(rowID, columnID, "top"));
-	queue.add(game.getRelativeCellObject(rowID, columnID, "bottom"));
-	queue.add(game.getRelativeCellObject(rowID, columnID, "left"));
-	queue.add(game.getRelativeCellObject(rowID, columnID, "right"));
-
-	// if 0 then add to array dom elements and use recursive call
+	let searched = [];
 	
-	
-	// display dom elements
+	// add current cell to queue
+	queue.add(currentCell);
 
+	while (queue.size() > 0) {
+		// if first in queue is not already searched
+		if (!searchDuplicates(queue.last(), searched)) {
+			// add neighbors
+			let neighbors = game.findEmptyNeighbors(queue.last());
+			neighbors.forEach(function(neighbor){
+				if (!searchDuplicates(neighbor, searched)) {
+					queue.add(neighbor);
+				}
+			});
+			// add first in queue to searched
+			searched.push(queue.last());
+		}
+		// remove from queue
+		queue.remove();
+	}
 
-	
+	return Array.from(searched);
+}
+
+function searchDuplicates(object, arr){
+	return arr.some(function(item){
+		let isEqual = true;
+		// compare every key value pair
+		Object.keys(object).forEach(function(key){
+			if (item[key] !== object[key]) {
+				isEqual = false;
+			}
+		})
+		return isEqual;
+	})
 }
