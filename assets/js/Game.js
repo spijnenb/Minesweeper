@@ -156,4 +156,44 @@ class Game {
 	
 		return emptyNeighbors;
 	}
+
+	findConnectedEmptyCells(currentCell) {
+		let queue = new Queue();
+		let searched = [];
+		
+		// add current cell to queue
+		queue.add(currentCell);
+	
+		while (queue.size() > 0) {
+			let self = this;
+			// if last in queue is not already searched
+			if (!self.searchDuplicates(queue.last(), searched)) {
+				// add neighbors
+				let neighbors = this.findEmptyNeighbors(queue.last());
+				neighbors.forEach(function(neighbor){
+					if (!self.searchDuplicates(neighbor, searched)) {
+						queue.add(neighbor);
+					}
+				});
+				// add last in queue to searched
+				searched.push(queue.last());
+			}
+			// remove from queue
+			queue.remove();
+		}
+		return searched;
+	}
+
+	searchDuplicates(object, arr){
+		return arr.some(function(item){
+			let isEqual = true;
+			// compare every key value pair
+			Object.keys(object).forEach(function(key){
+				if (item[key] !== object[key]) {
+					isEqual = false;
+				}
+			});
+			return isEqual;
+		});
+	}
 }
