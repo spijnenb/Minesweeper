@@ -7,6 +7,7 @@ class Game {
 			this.minefield = this.buildMinefield(10);
 			this.plantBomb(10);
 		}
+		this.score = 100;
 	}
 
 	buildMinefield(width) {
@@ -65,24 +66,16 @@ class Game {
 		}
 	}
 
-	displayMatrix() {
+	displayMineField(visible) {
 		let markup = "";
 		for (let i = 0; i < this.minefield.length; i++) {
 			markup += `<tr id="row${i}">\n`;
 			for (let j = 0; j < this.minefield.length; j++) {
-				markup += `<td id="col${j}">${this.minefield[i][j]}</td>`;
-			}
-			markup += "\n</tr>\n";
-		}
-		return markup;
-	}
-
-	displayHiddenMatrix() {
-		let markup = "";
-		for (let i = 0; i < this.minefield.length; i++) {
-			markup += `<tr id="row${i}">\n`;
-			for (let j = 0; j < this.minefield.length; j++) {
-				markup += `<td id="col${j}"></td>`;
+				markup += "<td id=col" + j + ">";
+				if (visible) {
+					markup += this.minefield[i][j];
+				}
+				markup += "</td>";
 			}
 			markup += "\n</tr>\n";
 		}
@@ -104,10 +97,10 @@ class Game {
 	 * @return object with value, row, column
 	 */
 
-	getRelativeCellObject(currentCell, direction) {
+	getRelativeTileObject(currentTile, direction) {
 		direction = direction.toLowerCase();
-		let row = currentCell.row;
-		let col = currentCell.col;
+		let row = currentTile.row;
+		let col = currentTile.col;
 		let relativeRow = row;
 		let relativeCol = col;
 
@@ -131,7 +124,7 @@ class Game {
 			relativeCol++;
 		}
 
-		// if top, bottom, left cell is same as currentCell then return false
+		// if top, bottom, left cell is same as currentTile then return false
 		if (row === relativeRow && col === relativeCol) {
 			return false;
 		} 
@@ -139,13 +132,13 @@ class Game {
 		return {value: this.minefield[relativeRow][relativeCol], row: relativeRow, col: relativeCol}
 	}
 
-	findEmptyNeighbors(currentCell) {
+	findEmptyNeighbors(currentTile) {
 		let emptyNeighbors = [];
 		let neighborhood = [
-			this.getRelativeCellObject(currentCell, "top"),
-			this.getRelativeCellObject(currentCell, "bottom"),
-			this.getRelativeCellObject(currentCell, "left"),
-			this.getRelativeCellObject(currentCell, "right")
+			this.getRelativeTileObject(currentTile, "top"),
+			this.getRelativeTileObject(currentTile, "bottom"),
+			this.getRelativeTileObject(currentTile, "left"),
+			this.getRelativeTileObject(currentTile, "right")
 		]
 	
 		neighborhood.forEach(function(neighbor){
@@ -157,12 +150,12 @@ class Game {
 		return emptyNeighbors;
 	}
 
-	findConnectedEmptyCells(currentCell) {
+	findConnectedEmptyTiles(currentTile) {
 		let queue = new Queue();
 		let searched = [];
 		
 		// add current cell to queue
-		queue.add(currentCell);
+		queue.add(currentTile);
 	
 		while (queue.size() > 0) {
 			let self = this;
@@ -195,5 +188,9 @@ class Game {
 			});
 			return isEqual;
 		});
+	}
+
+	getScore() {
+		return this.score;
 	}
 }

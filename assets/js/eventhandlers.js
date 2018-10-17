@@ -1,49 +1,63 @@
 // selectors
 
-let newGameButton = document.querySelector("#newGame");
-let matrix = document.querySelector("#matrix");
+const newGameButton = document.querySelector("#newGame");
+const matrix = document.querySelector("#matrix");
+const displayScore = document.querySelector("#score");
+
+let game;
 
 // functions
 
-function newGame(game) {
-	matrix.innerHTML = "<table>" + game.displayMatrix() + "</table>";
+function newGame() {
+	game = new Game("hard");
+	matrix.innerHTML = "<table>" + game.displayMineField(false) + "</table>";
 
-	let tds = Array.from(matrix.querySelectorAll("td"));
-	tds.forEach(td => {
-		td.addEventListener("click", clickOnCell.bind(td, game));
+	let tiles = Array.from(matrix.querySelectorAll("td"));
+	tiles.forEach(function(tile){
+		tile.addEventListener("click", stepOnTile);
 	});
 }
 
-function clickOnCell(game) {
-	let dom = this;
-	// create cell obj
-	let cell = {};
-	cell.row = Number(dom.parentElement.id.substr(3));
-	cell.col = Number(dom.id.substr(3));
-	cell.value = Number(game.getValue(cell.row, cell.col));
+function stepOnTile() {
+	// create tile obj
+	let tile = {};
+	tile.row = Number(this.parentElement.id.substr(3));
+	tile.col = Number(this.id.substr(3));
+	tile.value = Number(game.getValue(tile.row, tile.col));
 
 	// if bomb then place icon
-	if (cell.value >= 1000) {
-		dom.innerHTML = `<i class="fas fa-bomb"></i>`;
+	if (tile.value >= 1000) {
+		this.innerHTML = `<i class="fas fa-bomb"></i>`;
+		game.gameOver = true;
 	} else {
-		dom.innerText = cell.value;
+		this.innerText = tile.value;
 	}
 
 	// if 0, then clear empty part of minefield
-	if (cell.value === 0) {
-		let emptyCells = game.findConnectedEmptyCells(cell);
-
-		emptyCells.forEach(function(cell){
-			let currentCell = matrix.querySelector("#row" + cell.row).querySelector("#col" + cell.col);
-			currentCell.innerText = cell.value;
-			currentCell.bgColor = "yellow";		// todo change this
+	if (tile.value === 0) {
+		let emptyTiles = game.findConnectedEmptyTiles(tile);
+		emptyTiles.forEach(function(tile){
+			let currentTile = matrix.querySelector("#row" + tile.row).querySelector("#col" + tile.col);
+			currentTile.innerText = tile.value;
+			currentTile.bgColor = "yellow";		// todo change this
 		});
 	}
 }
 
+function countDown() {
+	// let score = game.getScore();
+	
+	if (score <= 0) {
+		gameOver();
+	}
+}
+
+function gameOver() {
+	alert("you lose!");
+}
+
 // events
 
-newGameButton.addEventListener("click", function(){
-	newGame(new Game("hard"));
-});
+newGameButton.addEventListener("click", newGame);
+score.setInterval(countDown, 1000);
 
