@@ -5,7 +5,7 @@ const matrix = document.querySelector("#matrix");
 const displayScore = document.querySelector("#score");
 
 let game;
-var startCounting;
+let startCounting;
 
 // functions
 
@@ -17,14 +17,16 @@ function newGame() {
 	let tiles = Array.from(matrix.querySelectorAll("td"));
 	tiles.forEach(function(tile){
 		tile.addEventListener("click", stepOnTile);
+		tile.addEventListener("contextmenu", plantFlag);
 	});
 
+	// clear previous timer and start new one
+	clearInterval(startCounting);
 	startCounting = setInterval(countDown, 1000);
 	
 }
 
 function stepOnTile() {
-	console.log("clicked!");
 	// create tile obj
 	let tile = {};
 	tile.row = Number(this.parentElement.id.substr(3));
@@ -67,15 +69,20 @@ function countDown() {
 }
 
 function gameOver() {
-	// remove all click events
-	let tiles = matrix.querySelectorAll("td");
-	tiles.forEach(function(tile){
-		tile.removeEventListener("click", stepOnTile, false);
-	});
+	// remove click events
+	// let tiles = matrix.querySelectorAll("td");
+	// tiles.forEach((tile) => tile.removeEventListener("click", stepOnTile, false));
+	// show all and removes click events
+	matrix.innerHTML = "<table>" + game.displayMineField(true) + "</table>";
 	// display game over
 	alert("Game Over! You're score is " + game.getScore());
 	// end timer
 	clearInterval(startCounting);
+}
+
+function plantFlag(event) {
+	event.preventDefault();
+	this.innerHTML = `<i class="fas fa-flag"></i>`;
 }
 
 // events
