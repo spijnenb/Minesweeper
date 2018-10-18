@@ -193,4 +193,14 @@ class Game {
 	getScore() {
 		return this.score;
 	}
+
+	setScore(score) {
+		this.score = score;
+	}
+
+	decrementScore() {
+		if (this.score > 0) {
+			this.score--;
+		}
+	}
 }
