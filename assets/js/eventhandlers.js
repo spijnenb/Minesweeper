@@ -23,16 +23,25 @@ function newGame() {
 	// clear previous timer and start new one
 	clearInterval(startCounting);
 	startCounting = setInterval(countDown, 1000);
-	
+}
+
+/**
+ * finds row and column in dom and value in minefield
+ * @param {object} currentTile element of current tile in minefield
+ * @return {object} object with row, column, and value
+ */
+function getTileObject(currentTile) {
+	let row = Number(currentTile.parentElement.id.substr(3));
+	let col = Number(currentTile.id.substr(3));
+	return {
+		row: row,
+		col: col,
+		value: Number(game.getValue(row, col)),
+	}
 }
 
 function stepOnTile() {
-	// create tile obj
-	let tile = {};
-	tile.row = Number(this.parentElement.id.substr(3));
-	tile.col = Number(this.id.substr(3));
-	tile.value = Number(game.getValue(tile.row, tile.col));
-
+	let tile = getTileObject(this);
 	// if bomb then place icon
 	if (tile.value >= 1000) {
 		this.innerHTML = `<i class="fas fa-bomb"></i>`;
@@ -47,46 +56,52 @@ function stepOnTile() {
 		let emptyTiles = game.findConnectedEmptyTiles(tile);
 		emptyTiles.forEach(function(tile){
 			let currentTile = matrix.querySelector("#row" + tile.row).querySelector("#col" + tile.col);
-			currentTile.innerText = tile.value;
+			currentTile.innerText = tile.value;	// todo remove this
 			currentTile.bgColor = "yellow";		// todo change this
 			currentTile.removeEventListener("click", stepOnTile);
+			currentTile.removeEventListener("contextmenu", plantFlag);
 		});
 	}
 
-	// remove eventlistener
+	// remove eventlisteners
 	this.removeEventListener("click", stepOnTile);
+	this.removeEventListener("contextmenu", plantFlag);
 }
 
 function countDown() {
-	// runs every second
 	game.decrementScore();
-	// update score
 	displayScore.innerText = game.getScore();
-	
 	if (game.getScore() < 1) {
 		gameOver();
 	}
 }
 
 function gameOver() {
-	// remove click events
-	// let tiles = matrix.querySelectorAll("td");
-	// tiles.forEach((tile) => tile.removeEventListener("click", stepOnTile, false));
-	// show all and removes click events
+	// display table again, without click events
 	matrix.innerHTML = "<table>" + game.displayMineField(true) + "</table>";
+	let tiles = Array.from(matrix.querySelectorAll("td"));
+	tiles.forEach((tile) => {
+		// place icons
+		if (Number(tile.innerText) >= 1000) {
+			tile.innerHTML = `<i class="fas fa-bomb"></i>`;
+		}
+	});
+	
 	// display game over
-	alert("Game Over! You're score is " + game.getScore());
+	console.log("%c Game Over", "color: red; font-weight: bolder; font-size: x-large");
 	// end timer
 	clearInterval(startCounting);
 }
 
 function plantFlag(event) {
 	event.preventDefault();
-	this.innerHTML = `<i class="fas fa-flag"></i>`;
+	let icon = `<i class="fas fa-flag"></i>`;
+	let tile = getTileObject(this);
+	this.innerHTML = (this.innerHTML !== icon) ? icon : "";
 }
 
 // events
 
 newGameButton.addEventListener("click", newGame);
-
+document.addEventListener("contextmenu", (event) => event.preventDefault());
 
