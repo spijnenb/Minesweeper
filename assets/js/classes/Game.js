@@ -1,13 +1,19 @@
 class Game {
 	constructor(difficulty) {
+		let width, bombs;
+
 		if (difficulty === "easy") {
-			this.minefield = this.buildMinefield(5);
-			this.plantBomb(3);			
+			width = 5;
+			bombs = 3;		
 		} else if (difficulty === "hard") {
-			this.minefield = this.buildMinefield(10);
-			this.plantBomb(10);
+			width = 10;
+			bombs = 10;
 		}
+		this.minefield = this.buildMinefield(width);
+		this.plantBomb(bombs);
 		this.score = 100;
+		this.maxSteps= this.getMaxSteps(bombs);
+		this.steps = 0;
 	}
 
 	buildMinefield(width) {
@@ -20,6 +26,22 @@ class Game {
 			minefield.push(column);
 		}
 		return minefield;
+	}
+
+	getMaxSteps(numBombs) {
+		return (this.minefield.length * this.minefield.length) - numBombs;
+	}
+
+	addToSteps() {
+		this.steps++;
+		console.log({
+			max: this.maxSteps,
+			steps: this.steps,
+		})
+		if (this.steps >= this.maxSteps) {
+			return true;
+		}
+		return false;
 	}
 
 	plantBomb(numBombs) {
@@ -62,6 +84,9 @@ class Game {
 						this.minefield[rngRow + 1][rngColumn + 1]++;		// bottom right
 					}
 				}
+			} else {
+				// plant another bomb
+				this.plantBomb(1);
 			}
 		}
 	}

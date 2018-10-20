@@ -10,7 +10,7 @@ let startCounting;
 // functions
 
 function newGame() {
-	game = new Game("hard");
+	game = new Game("easy");
 	matrix.innerHTML = "<table>" + game.displayMineField(false) + "</table>";
 	displayScore.innerText = game.getScore();
 
@@ -54,13 +54,21 @@ function stepOnTile() {
 	// if 0, then clear empty part of minefield
 	if (tile.value === 0) {
 		let emptyTiles = game.findConnectedEmptyTiles(tile);
-		emptyTiles.forEach(function(tile){
+		emptyTiles.forEach(function(tile, iterator){
 			let currentTile = matrix.querySelector("#row" + tile.row).querySelector("#col" + tile.col);
 			currentTile.innerText = tile.value;	// todo remove this
 			currentTile.bgColor = "yellow";		// todo change this
 			currentTile.removeEventListener("click", stepOnTile);
 			currentTile.removeEventListener("contextmenu", plantFlag);
+			if (iterator > 0) {
+				game.addToSteps()
+			}
 		});
+	}
+
+	// if won, game over
+	if (game.addToSteps()) {
+		gameOver(true);
 	}
 
 	// remove eventlisteners
@@ -76,7 +84,12 @@ function countDown() {
 	}
 }
 
-function gameOver() {
+/**
+ * ends game and shows score
+ * @param {boolean} winOrLose 
+ */
+
+function gameOver(winOrLose) {
 	// display table again, without click events
 	matrix.innerHTML = "<table>" + game.displayMineField(true) + "</table>";
 	let tiles = Array.from(matrix.querySelectorAll("td"));
@@ -86,9 +99,14 @@ function gameOver() {
 			tile.innerHTML = `<i class="fas fa-bomb"></i>`;
 		}
 	});
-	
+
 	// display game over
-	console.log("%c Game Over", "color: red; font-weight: bolder; font-size: x-large");
+	if (winOrLose) {
+		console.log("Congratulations, you won with a score of " + game.getScore());
+	} else {
+		console.log("%c Game Over", "color: red; font-weight: bolder; font-size: x-large");
+	}
+	
 	// end timer
 	clearInterval(startCounting);
 }
