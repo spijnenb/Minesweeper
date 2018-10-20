@@ -34,10 +34,6 @@ class Game {
 
 	addToSteps() {
 		this.steps++;
-		console.log({
-			max: this.maxSteps,
-			steps: this.steps,
-		})
 		if (this.steps >= this.maxSteps) {
 			return true;
 		}
@@ -206,7 +202,7 @@ class Game {
 	}
 
 	searchDuplicates(object, arr){
-		return arr.some(function(item){
+		return arr.some((item) => {
 			let isEqual = true;
 			// compare every key value pair
 			Object.keys(object).forEach(function(key){

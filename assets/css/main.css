@@ -1,6 +1,12 @@
 body {
 	font-family: Arial, Helvetica, sans-serif;
 	text-align: center;
+	
+	/* disable text selection */
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 table {
 	margin: 3em auto;
@@ -12,3 +18,7 @@ td {
 	height: 50px;
 	text-align: center;
 }
+.emptyTile {
+	background-color: #eee;
+}
+

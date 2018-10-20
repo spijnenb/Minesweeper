@@ -10,12 +10,12 @@ let startCounting;
 // functions
 
 function newGame() {
-	game = new Game("easy");
+	game = new Game("hard");
 	matrix.innerHTML = "<table>" + game.displayMineField(false) + "</table>";
 	displayScore.innerText = game.getScore();
 
 	let tiles = Array.from(matrix.querySelectorAll("td"));
-	tiles.forEach(function(tile){
+	tiles.forEach((tile) => {
 		tile.addEventListener("click", stepOnTile);
 		tile.addEventListener("contextmenu", plantFlag);
 	});
@@ -47,19 +47,19 @@ function stepOnTile() {
 		this.innerHTML = `<i class="fas fa-bomb"></i>`;
 		game.setScore(0);
 		gameOver();
-	} else {
+	} else if (tile.value > 0) {
 		this.innerText = tile.value;
 	}
 
 	// if 0, then clear empty part of minefield
 	if (tile.value === 0) {
 		let emptyTiles = game.findConnectedEmptyTiles(tile);
-		emptyTiles.forEach(function(tile, iterator){
+		emptyTiles.forEach((tile, iterator) => {
 			let currentTile = matrix.querySelector("#row" + tile.row).querySelector("#col" + tile.col);
-			currentTile.innerText = tile.value;	// todo remove this
-			currentTile.bgColor = "yellow";		// todo change this
+			currentTile.classList.add("emptyTile");
 			currentTile.removeEventListener("click", stepOnTile);
 			currentTile.removeEventListener("contextmenu", plantFlag);
+			// skip first iteration
 			if (iterator > 0) {
 				game.addToSteps()
 			}
@@ -94,9 +94,12 @@ function gameOver(winOrLose) {
 	matrix.innerHTML = "<table>" + game.displayMineField(true) + "</table>";
 	let tiles = Array.from(matrix.querySelectorAll("td"));
 	tiles.forEach((tile) => {
+		let value = Number(tile.innerText);
 		// place icons
-		if (Number(tile.innerText) >= 1000) {
+		if (value >= 1000) {
 			tile.innerHTML = `<i class="fas fa-bomb"></i>`;
+		} else if (value > 0) {
+			tile.classList.add("emptyTile");
 		}
 	});
 
@@ -122,4 +125,3 @@ function plantFlag(event) {
 
 newGameButton.addEventListener("click", newGame);
 document.addEventListener("contextmenu", (event) => event.preventDefault());
-
