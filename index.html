@@ -7,10 +7,21 @@
 	<title>Index</title>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="assets/css/darkmode.css">
 </head>
 <body>
-	<p id="score"></p>
-	<p id="newGame">New Game</p>
+	<div class="header">
+		<div class="header-item left">
+			<a id="newGame" class="button">New game</a>
+		</div>
+		<div class="header-item main">
+			<p>Score: <span id="score">..</span></p>
+		</div>
+		<div class="header-item right">
+			<a id="settings" class="button">Settings</a>
+		</div>
+	</div>
+
 	<div id="matrix"></div>
 	
 	<script src="assets/js/classes/Game.js"></script>

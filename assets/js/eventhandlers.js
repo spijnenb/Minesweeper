@@ -98,7 +98,8 @@ function gameOver(winOrLose) {
 		// place icons
 		if (value >= 1000) {
 			tile.innerHTML = `<i class="fas fa-bomb"></i>`;
-		} else if (value > 0) {
+		} else if (value === 0) {
+			tile.innerText = "";
 			tile.classList.add("emptyTile");
 		}
 	});
@@ -107,6 +108,7 @@ function gameOver(winOrLose) {
 	if (winOrLose) {
 		console.log("Congratulations, you won with a score of " + game.getScore());
 	} else {
+		displayScore.innerText = 0;
 		console.log("%c Game Over", "color: red; font-weight: bolder; font-size: x-large");
 	}
 	
@@ -123,5 +125,6 @@ function plantFlag(event) {
 
 // events
 
-newGameButton.addEventListener("click", newGame);
 document.addEventListener("contextmenu", (event) => event.preventDefault());
+newGameButton.addEventListener("click", newGame);
+

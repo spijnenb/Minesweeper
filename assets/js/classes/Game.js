@@ -162,7 +162,7 @@ class Game {
 			this.getRelativeTileObject(currentTile, "right")
 		]
 	
-		neighborhood.forEach(function(neighbor){
+		neighborhood.forEach((neighbor) => {
 			if (neighbor && neighbor.value === 0) {
 				emptyNeighbors.push(neighbor);
 			}
