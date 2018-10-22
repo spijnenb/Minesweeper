@@ -1,7 +1,7 @@
 // selectors
 
 const newGameButton = document.querySelector("#newGame");
-const matrix = document.querySelector("#matrix");
+const grid = document.querySelector("#grid");
 const displayScore = document.querySelector("#score");
 
 let game;
@@ -11,10 +11,10 @@ let startCounting;
 
 function newGame() {
 	game = new Game("hard");
-	matrix.innerHTML = "<table>" + game.displayMineField(false) + "</table>";
+	grid.innerHTML = "<table>" + game.displayMineField(false) + "</table>";
 	displayScore.innerText = game.getScore();
 
-	let tiles = Array.from(matrix.querySelectorAll("td"));
+	let tiles = Array.from(grid.querySelectorAll("td"));
 	tiles.forEach((tile) => {
 		tile.addEventListener("click", stepOnTile);
 		tile.addEventListener("contextmenu", plantFlag);
@@ -55,7 +55,7 @@ function stepOnTile() {
 	if (tile.value === 0) {
 		let emptyTiles = game.findConnectedEmptyTiles(tile);
 		emptyTiles.forEach((tile, iterator) => {
-			let currentTile = matrix.querySelector("#row" + tile.row).querySelector("#col" + tile.col);
+			let currentTile = grid.querySelector("#row" + tile.row).querySelector("#col" + tile.col);
 			currentTile.classList.add("emptyTile");
 			currentTile.removeEventListener("click", stepOnTile);
 			currentTile.removeEventListener("contextmenu", plantFlag);
@@ -91,8 +91,8 @@ function countDown() {
 
 function gameOver(winOrLose) {
 	// display table again, without click events
-	matrix.innerHTML = "<table>" + game.displayMineField(true) + "</table>";
-	let tiles = Array.from(matrix.querySelectorAll("td"));
+	grid.innerHTML = "<table>" + game.displayMineField(true) + "</table>";
+	let tiles = Array.from(grid.querySelectorAll("td"));
 	tiles.forEach((tile) => {
 		let value = Number(tile.innerText);
 		// place icons

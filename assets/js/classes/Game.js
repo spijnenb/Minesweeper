@@ -112,7 +112,7 @@ class Game {
 	}
 
 	/**
-	 * Get value of neighboring cell in matrix including row and column index
+	 * Get value of neighboring cell in grid including row and column index
 	 * @param {object} currentTile current cell with row, column and value
 	 * @param {string} direction top, bottom, left, or right
 	 * @return object of neighboring cell with row, column, and value
