@@ -66,6 +66,22 @@ a.button {
 .emptyTile {
 	background-color: #999999;
 }
+p.large {
+	font-size: 1.5em;
+}
+
+#message {
+	text-align: center;
+}
+
+.slideUp, .slideDown {
+	max-height: 0;            
+	overflow-y: hidden;
+	transition: max-height 0.8s ease;
+}
+.slideDown {
+	max-height: 110px;
+}
 
 /* Mobile large */
 @media only screen and (min-width: 425px) {
