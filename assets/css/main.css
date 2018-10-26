@@ -68,10 +68,23 @@ a.button {
 }
 p.large {
 	font-size: 1.5em;
+	margin: 10px;
 }
 
 #message {
 	text-align: center;
+}
+
+/* Animations */
+
+#grid {
+	transition: opacity 1s ease;
+}
+.hidden {
+	opacity: 0;
+}
+.visible {
+	opacity: 1;
 }
 
 .slideUp, .slideDown {

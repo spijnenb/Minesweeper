@@ -12,8 +12,10 @@ let startCounting;
 
 function newGame() {
 	game = new Game("hard");
-	grid.innerHTML = "<table>" + game.displayMineField(false) + "</table>";
+	grid.innerHTML = `<table>${game.displayMineField(false)}</table>`;
 	displayScore.innerText = game.getScore();
+	grid.classList.replace("hidden", "visible");	// fade in effect
+
 
 	let tiles = Array.from(grid.querySelectorAll("td"));
 	tiles.forEach((tile) => {
