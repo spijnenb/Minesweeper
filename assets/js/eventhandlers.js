@@ -125,10 +125,8 @@ function removeMessage() {
 	let displayMessage = document.querySelector("#message");
 	if (!displayMessage) return;
 	displayMessage.classList.replace("slideDown", "slideUp");	
-	// delete after 2s
-	setTimeout(() => {
-		displayMessage.remove();	
-	}, 2000);
+	// remove dom element after transition ends
+	displayMessage.addEventListener("transitionend", () => displayMessage.remove());
 }
 
 function showMessage(winOrLose) {
@@ -143,6 +141,7 @@ function showMessage(winOrLose) {
 	} else {
 		msgText.title = "Game Over";
 		msgText.body = "Better luck next time!"
+		displayScore.innerText = 0;
 	}
 	// set attributes
 	msg.id = "message";
@@ -154,11 +153,13 @@ function showMessage(winOrLose) {
 	setTimeout(() => msg.classList.replace("slideUp", "slideDown"), 200);
 }
 
+function showSettings() {
+	console.log("clicked");
+}
+
 // events
 
 document.addEventListener("contextmenu", (event) => event.preventDefault());
 newGameButton.addEventListener("click", newGame);
-settingsButton.addEventListener("click", function() {
-	
-});
+settingsButton.addEventListener("click", showSettings);
 
