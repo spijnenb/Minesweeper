@@ -3,10 +3,11 @@
 const newGameButton = document.querySelector("#newGame");
 const grid = document.querySelector("#grid");
 const displayScore = document.querySelector("#score");
-const settingsButton = document.querySelector("#settings");
+const settingsButton = document.querySelector("#settingsButton");
 const displayDifficulty = document.querySelector("#difficulty");
 const changeDifficultyButtons = document.querySelectorAll(".change-difficulty");
 const darkModeButton = document.querySelector("#darkmode");
+const settingsPanel = document.querySelector("#settingsPanel");
 
 let game;
 let gameModes = ["easy", "medium", "hard"];
@@ -31,6 +32,10 @@ function newGame() {
 
 	// clear game over message
 	removeMessage();
+	// hide settingspanel
+	if (!settingsPanel.classList.contains("slideUp")) {
+		toggleSettingsPanel();	
+	}
 	// clear previous timer and start new one
 	clearInterval(startCounting);
 	startCounting = setInterval(countDown, 1000);
@@ -161,8 +166,13 @@ function showMessage(winOrLose) {
 	setTimeout(() => msg.classList.replace("slideUp", "slideDown"), 200);
 }
 
-function showSettings() {
-	console.log("clicked");
+function toggleSettingsPanel() {
+	// show / hide settings panel
+	if (settingsPanel.classList.contains("slideUp")) {
+		settingsPanel.classList.replace("slideUp", "slideDown");	
+	} else {
+		settingsPanel.classList.replace("slideDown", "slideUp");	
+	}
 }
 
 function changeDifficulty() {
@@ -199,6 +209,6 @@ function toggleDarkMode() {
 
 document.addEventListener("contextmenu", (event) => event.preventDefault());
 newGameButton.addEventListener("click", newGame);
-settingsButton.addEventListener("click", showSettings);
+settingsButton.addEventListener("click", toggleSettingsPanel);
 changeDifficultyButtons.forEach((button) => button.addEventListener("click", changeDifficulty));
 darkModeButton.addEventListener("click", toggleDarkMode);
