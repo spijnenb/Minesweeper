@@ -4,14 +4,20 @@ const newGameButton = document.querySelector("#newGame");
 const grid = document.querySelector("#grid");
 const displayScore = document.querySelector("#score");
 const settingsButton = document.querySelector("#settings");
+const displayDifficulty = document.querySelector("#difficulty");
+const changeDifficultyButtons = document.querySelectorAll(".change-difficulty");
+const darkModeButton = document.querySelector("#darkmode");
 
 let game;
+let gameModes = ["easy", "medium", "hard"];
+let difficulty = 1;		// default
 let startCounting;
 
 // functions
 
 function newGame() {
-	game = new Game("hard");
+	let currentDifficulty = gameModes[difficulty];
+	game = new Game(currentDifficulty);
 	grid.innerHTML = `<table>${game.displayMineField(false)}</table>`;
 	displayScore.innerText = game.getScore();
 	grid.classList.replace("hidden", "visible");	// fade in effect
@@ -159,9 +165,40 @@ function showSettings() {
 	console.log("clicked");
 }
 
+function changeDifficulty() {
+	if (this.innerText === '<') {			// lower difficulty
+		// get and change diff
+		if (difficulty > 0) difficulty--;
+	} else if (this.innerText === '>') {	// raise difficulty
+		// get and change diff
+		if (difficulty < gameModes.length - 1) difficulty++;
+	}
+	// set diff
+	displayDifficulty.innerText = gameModes[difficulty];
+}
+
+function toggleDarkMode() {
+	let stylesheet =  "assets/css/darkmode.css";
+	if (this.checked) {
+		// append stylesheet
+		let link = document.createElement("link");
+		link.setAttribute("rel", "stylesheet");
+		link.type = "text/css";
+		link.href = stylesheet;
+		document.head.appendChild(link);
+	} else {
+		// find darkmode stylesheet and remove
+		let result = document.head.querySelectorAll(`link[href="${stylesheet}"]`);
+		result[0].remove();
+
+	}
+	
+}
+
 // events
 
 document.addEventListener("contextmenu", (event) => event.preventDefault());
 newGameButton.addEventListener("click", newGame);
 settingsButton.addEventListener("click", showSettings);
-
+changeDifficultyButtons.forEach((button) => button.addEventListener("click", changeDifficulty));
+darkModeButton.addEventListener("click", toggleDarkMode);

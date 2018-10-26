@@ -5,9 +5,12 @@ class Game {
 		if (difficulty === "easy") {
 			width = 5;
 			bombs = 3;		
-		} else if (difficulty === "hard") {
+		} else if (difficulty === "medium") {
 			width = 10;
 			bombs = 10;
+		} else if (difficulty === "hard") {
+			width = 10;
+			bombs = 20;
 		}
 		this.minefield = this.buildMinefield(width);
 		this.plantBomb(bombs);

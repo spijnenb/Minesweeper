@@ -5,9 +5,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Minesweeper</title>
+	<link rel="shortcut icon" href="assets/ico/favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 	<link rel="stylesheet" href="assets/css/main.css">
-	<link rel="stylesheet" href="assets/css/darkmode.css">
 </head>
 <body>
 	<div class="header">
@@ -23,6 +23,28 @@
 	</div>
 
 	<div id="grid" class="hidden"></div>
+
+	<div id="settings">
+		<table>
+			<tr>
+				<td>Difficulty</td>
+				<td>
+					<a class="button-sm change-difficulty"><</a>
+					<span id="difficulty">medium</span>
+					<a class="button-sm change-difficulty">></a>
+				</td>
+			</tr>
+			<tr>
+				<td>Dark mode</td>
+				<td>
+					<label class="switch">
+						<input type="checkbox" id="darkmode">
+						<span class="slider"></span>
+					  </label>
+				</td>
+			</tr>
+		</table>
+	</div>
 	
 	<script src="assets/js/classes/Game.js"></script>
 	<script src="assets/js/classes/Queue.js"></script>

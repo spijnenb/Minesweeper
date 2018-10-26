@@ -12,7 +12,7 @@ html, body {
 table {
 	margin: 0 auto;
 }
-td {
+#grid>table>tbody>tr>td {
 	font-size: 0.8rem;
 	border: 2px solid black;
 	width: 23px;
@@ -24,8 +24,11 @@ td {
 * {
 	font-weight: bold;
 }
-td:hover, a.button:hover {
-	background-color: rgb(187, 203, 255);
+#grid>table>tbody>tr>td:hover, a.button:hover {
+	background-color: #bbcbff;
+}
+a.button-sm:hover {
+	color: #bbcbff;
 }
 .header {
 	min-width: 320px;
@@ -75,6 +78,72 @@ p.large {
 	text-align: center;
 }
 
+/* Settings */
+
+#settings>table {
+	text-align: center;
+	width: 100%;
+}
+#settings>table>tbody>tr>td:first-of-type {
+	text-align: left;
+	width: 50%;
+	padding: 15px 0;
+}
+#difficulty {
+	display: inline-block;
+	text-transform: capitalize;
+	width: 100px;
+}
+a.button-sm {
+	background-color: #000;
+	color: #fff;
+	padding: 0 5px;
+	border-radius: 5px;
+}
+
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 45px;
+	height: 26px;
+}
+  
+.switch input { 
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+  
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	border-radius: 25px;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+  
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 20px;
+	width: 20px;
+	left: 3px;
+	bottom: 3px;
+	border-radius: 50%;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+input:checked + .slider:before {
+	transform: translateX(18px);
+}
+
 /* Animations */
 
 #grid {
@@ -98,18 +167,24 @@ p.large {
 
 /* Mobile large */
 @media only screen and (min-width: 425px) {
-	td {
+	#grid>table>tbody>tr>td {
 		width: 40px;
 		height: 40px;
 		font-size: 1rem;
 	}
+	#settings>table {
+		max-width: 400px;
+	}
 }
 /* Tablet and desktop view  */
 @media only screen and (min-width: 768px) {
-	td {
+	#grid>table>tbody>tr>td {
 		width: 50px;
 		height: 50px;
 		font-size: 1.2rem;
+	}
+	#settings>table {
+		max-width: 500px;
 	}
 	.header-item {
 		flex-basis: 250px;
