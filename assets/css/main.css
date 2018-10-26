@@ -147,7 +147,10 @@ input:checked + .slider:before {
 /* Animations */
 
 #grid {
-	transition: opacity 1s ease;
+	transition: opacity 1s ease-out;
+}
+#settingsPanel {
+	transition: opacity 1s ease-out, max-height 0.8s ease;
 }
 .hidden {
 	opacity: 0;

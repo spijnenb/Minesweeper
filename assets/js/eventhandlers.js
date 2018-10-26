@@ -32,10 +32,16 @@ function newGame() {
 
 	// clear game over message
 	removeMessage();
-	// hide settingspanel
-	if (!settingsPanel.classList.contains("slideUp")) {
-		toggleSettingsPanel();	
+
+	// make settingspanel visible and slideUp
+	if (settingsPanel.classList.contains("hidden")) {
+		settingsPanel.classList.remove("hidden");
 	}
+	if (settingsPanel.classList.contains("slideDown")) {
+		toggleSettingsPanel();
+	}
+	settingsPanel.classList.add("slideUp");
+
 	// clear previous timer and start new one
 	clearInterval(startCounting);
 	startCounting = setInterval(countDown, 1000);
@@ -167,11 +173,19 @@ function showMessage(winOrLose) {
 }
 
 function toggleSettingsPanel() {
-	// show / hide settings panel
-	if (settingsPanel.classList.contains("slideUp")) {
-		settingsPanel.classList.replace("slideUp", "slideDown");	
+	// if game hasn't started, use fade animation
+	let state1, state2;
+	if (!game) {
+		state1 = "hidden";
+		state2 = "visible";
 	} else {
-		settingsPanel.classList.replace("slideDown", "slideUp");	
+		state1 = "slideUp";
+		state2 = "slideDown";
+	}	
+	if (settingsPanel.classList.contains(state1)) {
+		settingsPanel.classList.replace(state1, state2);	
+	} else {
+		settingsPanel.classList.replace(state2, state1);	
 	}
 }
 
