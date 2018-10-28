@@ -1,29 +1,24 @@
 class Queue {
 	constructor() {
-		this.data = [];
-	}
+		// implemented encapsulaton using closure
+		let _data = [];
 
-	add(item) {
-		if (item) {
-			this.data.unshift(item);
+		this.add = (item) => {
+			if (item) {
+				_data.unshift(item);
+			}
 		}
-	}
 
-	remove() {
-		if (this.size() > 0) {
-			this.data.pop();
+		this.remove = () => {
+			if (this.size() > 0) {
+				_data.pop();
+			}
 		}
-	}
 
-	first() {
-		return this.data[0];
-	}
+		this.first = () => _data[0];
 
-	last() {
-		return this.data[this.data.length - 1];
-	}
+		this.last = () => _data[_data.length - 1]
 
-	size() {
-		return this.data.length;
+		this.size = () => _data.length
 	}
 }
