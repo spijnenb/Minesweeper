@@ -25,8 +25,8 @@ function newGame() {
 			numBombs = 3;
 			break;
 		case "medium":
-			width = 3;
-			numBombs = 8;
+			width = 5;
+			numBombs = 10;
 			break;
 		case "hard":
 			width = 5;
@@ -89,7 +89,7 @@ function stepOnTile() {
 	if (tile.value > 0) {
 		this.innerText = tile.value;
 	}
-	
+
 	// if 0, then clear empty part of minefield
 	if (tile.value === 0) {
 		let emptyTiles = game.findConnectedEmptyTiles(tile);
