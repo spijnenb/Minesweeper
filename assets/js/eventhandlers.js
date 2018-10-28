@@ -58,9 +58,10 @@
 		}
 		if (settingsPanel.classList.contains("slideDown")) {
 			toggleSettingsPanel();
+		} else {
+			settingsPanel.classList.add("slideUp");
 		}
-		settingsPanel.classList.add("slideUp");
-
+		
 		// clear previous timer and start new one
 		clearInterval(startCounting);
 		startCounting = setInterval(countDown, 1000);
