@@ -196,6 +196,9 @@
 		// if game hasn't started, use fade animation
 		let state1, state2;
 		if (!game) {
+			settingsPanel.classList.remove("slideUp");
+		}
+		if (!game) {
 			state1 = "hidden";
 			state2 = "visible";
 		} else {
