@@ -192,7 +192,7 @@ class Game {
 				if (!searchDuplicates(queue.last(), searched)) {
 					// add neighbors
 					let neighbors = findEmptyNeighbors(queue.last());
-					neighbors.forEach(function(neighbor){
+					neighbors.forEach((neighbor) => {
 						if (!searchDuplicates(neighbor, searched)) {
 							queue.add(neighbor);
 						}
