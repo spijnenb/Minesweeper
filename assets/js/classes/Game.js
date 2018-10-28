@@ -10,7 +10,7 @@ class Game {
 		 */
 		let _minefield = buildMinefield(width);
 		let _score = 100;
-		let _maxSteps = getMaxSteps(bombs);
+		let _maxSteps = (_minefield.length * _minefield.length) - bombs;
 		let _steps = 0;
 
 		plantBomb(bombs);		// add bombs to minefield
@@ -29,10 +29,6 @@ class Game {
 				minefield.push(column);
 			}
 			return minefield;
-		}
-
-		function getMaxSteps(numBombs) {
-			return (_minefield.length * _minefield.length) - numBombs;
 		}
 
 		function plantBomb(numBombs) {

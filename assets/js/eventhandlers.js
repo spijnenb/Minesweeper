@@ -22,19 +22,19 @@ function newGame() {
 	switch (currentDifficulty) {
 		case "easy":
 			width = 5;
-			numBombs = 30;
+			numBombs = 3;
 			break;
 		case "medium":
-			width = 10;
-			numBombs = 10;
+			width = 3;
+			numBombs = 8;
 			break;
 		case "hard":
-			width = 10;
+			width = 5;
 			numBombs = 20;
 			break;
 	}
 	game = new Game(width, numBombs);
-	grid.innerHTML = `<table>${game.displayMineField(false)}</table>`;
+	grid.innerHTML = `<table>${game.displayMineField(true)}</table>`;
 	displayScore.innerText = game.getScore();
 	grid.classList.replace("hidden", "visible");	// fade in effect
 
@@ -79,15 +79,17 @@ function getTileObject(currentTile) {
 
 function stepOnTile() {
 	let tile = getTileObject(this);
-	// if bomb then place icon
+	// if bomb, game over.
 	if (tile.value >= 1000) {
-		this.innerHTML = `<i class="fas fa-bomb"></i>`;
 		game.setScore(0);
-		gameOver();
-	} else if (tile.value > 0) {
+		gameOver(false);
+		return;
+	} 
+
+	if (tile.value > 0) {
 		this.innerText = tile.value;
 	}
-
+	
 	// if 0, then clear empty part of minefield
 	if (tile.value === 0) {
 		let emptyTiles = game.findConnectedEmptyTiles(tile);
@@ -102,7 +104,6 @@ function stepOnTile() {
 			}
 		});
 	}
-
 	// if won, game over
 	if (game.addToSteps()) {
 		gameOver(true);
