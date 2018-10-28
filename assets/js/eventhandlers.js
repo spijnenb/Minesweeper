@@ -1,4 +1,4 @@
-//IIFE to keep global scope empty
+// IIFE to keep global scope empty
 
 (function(window, document){
 
