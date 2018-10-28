@@ -1,6 +1,6 @@
+// ES6 class with implemented encapsulation using closure
 class Queue {
 	constructor() {
-		// implemented encapsulaton using closure
 		let _data = [];
 
 		this.add = (item) => {
@@ -10,15 +10,15 @@ class Queue {
 		}
 
 		this.remove = () => {
-			if (this.size() > 0) {
+			if (_data.length > 0) {
 				_data.pop();
 			}
 		}
 
 		this.first = () => _data[0];
 
-		this.last = () => _data[_data.length - 1]
+		this.last = () => _data[_data.length - 1];
 
-		this.size = () => _data.length
+		this.size = () => _data.length;
 	}
 }

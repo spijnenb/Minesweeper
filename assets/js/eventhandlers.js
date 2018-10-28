@@ -17,8 +17,23 @@ let startCounting;
 // functions
 
 function newGame() {
+	let width, numBombs;
 	let currentDifficulty = gameModes[difficulty];
-	game = new Game(currentDifficulty);
+	switch (currentDifficulty) {
+		case "easy":
+			width = 5;
+			numBombs = 30;
+			break;
+		case "medium":
+			width = 10;
+			numBombs = 10;
+			break;
+		case "hard":
+			width = 10;
+			numBombs = 20;
+			break;
+	}
+	game = new Game(width, numBombs);
 	grid.innerHTML = `<table>${game.displayMineField(false)}</table>`;
 	displayScore.innerText = game.getScore();
 	grid.classList.replace("hidden", "visible");	// fade in effect
