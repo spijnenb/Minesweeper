@@ -32,5 +32,6 @@ input:checked + .slider {
 }
 
 input:focus + .slider {
-	box-shadow: 0 0 1px #7a2431;
+	-webkit-box-shadow: 0 0 1px #7a2431;
+	        box-shadow: 0 0 1px #7a2431;
 }
