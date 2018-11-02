@@ -40,8 +40,7 @@
 		game = new Game(width, numBombs);
 		grid.innerHTML = `<table>${game.displayMineField(false)}</table>`;
 		displayScore.innerText = game.getScore();
-		grid.classList.replace("hidden", "visible");	// fade in effect
-
+		replaceClass(grid, "hidden", "visible");	// fade in effect
 
 		let tiles = Array.from(grid.querySelectorAll("td"));
 		tiles.forEach((tile) => {
@@ -164,7 +163,7 @@
 	function removeMessage() {
 		let displayMessage = document.querySelector("#message");
 		if (!displayMessage) return;
-		displayMessage.classList.replace("slideDown", "slideUp");	
+		replaceClass(displayMessage, "slideDown", "slideUp");
 		// remove dom element after transition ends
 		displayMessage.addEventListener("transitionend", () => displayMessage.remove());
 	}
@@ -190,7 +189,7 @@
 		// insert element into dom
 		document.querySelector("body").insertBefore(msg, grid);
 		// slide down after 0.2s animation
-		setTimeout(() => msg.classList.replace("slideUp", "slideDown"), 200);
+		setTimeout(() => replaceClass(msg, "slideUp", "slideDown"), 200);
 	}
 
 	function toggleSettingsPanel() {
@@ -207,9 +206,9 @@
 			state2 = "slideDown";
 		}	
 		if (settingsPanel.classList.contains(state1)) {
-			settingsPanel.classList.replace(state1, state2);	
+			replaceClass(settingsPanel, state1, state2);
 		} else {
-			settingsPanel.classList.replace(state2, state1);	
+			replaceClass(settingsPanel, state2, state1);
 		}
 	}
 
@@ -238,9 +237,18 @@
 			// find darkmode stylesheet and remove
 			let result = document.head.querySelectorAll(`link[href="${stylesheet}"]`);
 			result[0].remove();
-
 		}
-		
+	}
+
+	/**
+	 * Custom function to replace classList.replace(). Improves browser support for Edge//Safari
+	 * @param {object} element
+	 * @param {string} oldClass
+	 * @param {string} newClass 
+	 */
+	function replaceClass(element, oldClass, newClass) {
+		element.classList.remove(oldClass);
+		element.classList.add(newClass);
 	}
 
 	// events
