@@ -1,56 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Minesweeper</title>
-	<link rel="shortcut icon" href="assets/ico/favicon.ico" type="image/x-icon">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-	<link rel="stylesheet" href="assets/css/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Minesweeper</title>
+  <link rel="shortcut icon" href="assets/ico/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
-	<div class="header">
-		<div class="header-item left">
-			<a id="newGame" class="button">New game</a>
-		</div>
-		<div class="header-item main">
-			<p>Score: <span id="score">..</span></p>
-		</div>
-		<div class="header-item right">
-			<a id="settingsButton" class="button">Settings</a>
-		</div>
-	</div>
+  <div class="header">
+    <div class="header-item left">
+      <a id="newGame" class="button">New game</a>
+    </div>
+    <div class="header-item main">
+      <p>Score: <span id="score">..</span></p>
+    </div>
+    <div class="header-item right">
+      <a id="settingsButton" class="button">Settings</a>
+    </div>
+  </div>
 
-	<div id="settingsPanel" class="hidden slideUp">
-		<table>
-			<tr>
-				<td>Difficulty</td>
-				<td>
-					<a class="button-sm change-difficulty">&lt;</a>
-					<span id="difficulty">medium</span>
-					<a class="button-sm change-difficulty">&gt;</a>
-				</td>
-			</tr>
-			<tr>
-				<td>Dark mode</td>
-				<td>
-					<label class="switch">
-						<input type="checkbox" id="darkmode">
-						<span class="slider"></span>
-					  </label>
-				</td>
-			</tr>
-		</table>
-	</div>
+  <div id="settingsPanel" class="hidden slideUp">
+    <table>
+      <tr>
+        <td>Difficulty</td>
+        <td>
+          <a class="button-sm change-difficulty">&lt;</a>
+          <span id="difficulty">medium</span>
+          <a class="button-sm change-difficulty">&gt;</a>
+        </td>
+      </tr>
+      <tr>
+        <td>Dark mode</td>
+        <td>
+          <label class="switch">
+            <input type="checkbox" id="darkmode">
+            <span class="slider"></span>
+            </label>
+        </td>
+      </tr>
+    </table>
+  </div>
 
 
-	<div id="grid" class="hidden"></div>
+  <div id="grid" class="hidden"></div>
 
-	
-	
-	<script src="assets/js/classes/Game.js"></script>
-	<script src="assets/js/classes/Queue.js"></script>
-	<script src="assets/js/eventhandlers.js"></script>
+  
+  
+  <script src="assets/js/classes/Game.js"></script>
+  <script src="assets/js/classes/Queue.js"></script>
+  <script src="assets/js/eventhandlers.js"></script>
 </body>
 </html>

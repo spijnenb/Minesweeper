@@ -1,37 +1,37 @@
 body {
-	background-color: #282828;
-	color: #fff;
+  background-color: #282828;
+  color: #fff;
 }
 
 a.button {
-	border: 2px solid #fff;
+  border: 2px solid #fff;
 }
 
 a.button-sm {
-	background-color: #fff;
-	color: #000;
+  background-color: #fff;
+  color: #000;
 }
 .emptyTile {
-	background-color: #000;
+  background-color: #000;
 }
 
 #grid>table>tbody>tr>td {
-	border: 2px solid black;
+  border: 2px solid black;
 }
 
 #grid>table>tbody>tr>td:hover, a.button:hover {
-	background-color: #7a2431;
+  background-color: #7a2431;
 }
 a.button-sm:hover {
-	background-color: #7a2431;
-	color: #fff;
+  background-color: #7a2431;
+  color: #fff;
 }
 
 input:checked + .slider {
-	background-color: #7a2431;
+  background-color: #7a2431;
 }
 
 input:focus + .slider {
-	-webkit-box-shadow: 0 0 1px #7a2431;
-	        box-shadow: 0 0 1px #7a2431;
+  -webkit-box-shadow: 0 0 1px #7a2431;
+          box-shadow: 0 0 1px #7a2431;
 }
