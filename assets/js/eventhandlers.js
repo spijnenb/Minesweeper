@@ -63,7 +63,7 @@
     
     // clear previous timer and start new one
     clearInterval(startCounting);
-    startCounting = setInterval(countDown, 1000);
+    startCounting = setInterval(countUp, 1000);
   }
 
   /**
@@ -118,12 +118,9 @@
     this.removeEventListener("contextmenu", plantFlag);
   }
 
-  function countDown() {
-    game.decrementScore();
+  function countUp() {
+    game.incrementScore();
     displayScore.innerText = game.getScore();
-    if (game.getScore() < 1) {
-      gameOver();
-    }
   }
 
   /**

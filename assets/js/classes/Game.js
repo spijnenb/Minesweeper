@@ -9,7 +9,7 @@ class Game {
      * Instance vars
      */
     let _minefield = buildMinefield(width);
-    let _score = 100;
+    let _score = 0;
     let _maxSteps = (_minefield.length * _minefield.length) - bombs;
     let _steps = 0;
 
@@ -211,5 +211,6 @@ class Game {
         _score--;
       }
     }
+    this.incrementScore = () => _score++;
   }
 }
