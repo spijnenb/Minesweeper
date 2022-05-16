@@ -3,9 +3,9 @@ class Queue {
 
   #data = [];
 
-  add = (item) => {
-    if (item) {
-      this.#data.unshift(item);
+  add = (pItem) => {
+    if (pItem) {
+      this.#data.unshift(pItem);
     }
   }
 

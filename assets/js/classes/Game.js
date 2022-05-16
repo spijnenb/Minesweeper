@@ -5,22 +5,22 @@ class Game {
   #maxSteps = 0;
   #steps = 0;
 
-  constructor(width, bombs) {
-    if (bombs > width * width) {
-      bombs = width * width;
+  constructor(pWidth, pBombs) {
+    if (pBombs > pWidth * pWidth) {
+      pBombs = pWidth * pWidth;
     }
-    this.#minefield = this.#buildMinefield(width);
-    this.#maxSteps = this.#minefield.length * this.#minefield.length - bombs;
-    this.#plantBomb(bombs); // add bombs to minefield
+    this.#minefield = this.#buildMinefield(pWidth);
+    this.#maxSteps = this.#minefield.length * this.#minefield.length - pBombs;
+    this.#plantBomb(pBombs); // add bombs to minefield
   }
 
   // Private methods
 
-  #buildMinefield = (width) => {
+  #buildMinefield = (pWidth) => {
     let minefield = [];
-    for (let i = 0; i < width; i++) {
+    for (let i = 0; i < pWidth; i++) {
       let column = [];
-      for (let j = 0; j < width; j++) {
+      for (let j = 0; j < pWidth; j++) {
         column.push(0);
       }
       minefield.push(column);
@@ -28,10 +28,10 @@ class Game {
     return minefield;
   };
 
-  #plantBomb = (numBombs) => {
+  #plantBomb = (pNumBombs) => {
     let max = this.#minefield.length - 1;
     let min = 0;
-    for (let i = 0; i < numBombs; i++) {
+    for (let i = 0; i < pNumBombs; i++) {
       // pick random number between min and max (inclusive)
       let rngRow = Math.floor(Math.random() * (max - min + 1) + min);
       let rngColumn = Math.floor(Math.random() * (max - min + 1) + min);
@@ -69,10 +69,10 @@ class Game {
    * @param {string} direction top, bottom, left, or right
    * @return object of neighboring cell with row, column, and value
    */
-  #getRelativeTileObject = (currentTile, direction) => {
-    direction = direction.toLowerCase();
-    let row = currentTile.row;
-    let col = currentTile.col;
+  #getRelativeTileObject = (pCurrentTile, pDirection) => {
+    let direction = pDirection.toLowerCase();
+    let row = pCurrentTile.row;
+    let col = pCurrentTile.col;
     let relativeRow = row;
     let relativeCol = col;
 
@@ -104,13 +104,13 @@ class Game {
     return { value: this.#minefield[relativeRow][relativeCol], row: relativeRow, col: relativeCol };
   };
 
-  #findEmptyNeighbors = (currentTile) => {
+  #findEmptyNeighbors = (pCurrentTile) => {
     let emptyNeighbors = [];
     let neighborhood = [
-      this.#getRelativeTileObject(currentTile, "top"),
-      this.#getRelativeTileObject(currentTile, "bottom"),
-      this.#getRelativeTileObject(currentTile, "left"),
-      this.#getRelativeTileObject(currentTile, "right"),
+      this.#getRelativeTileObject(pCurrentTile, "top"),
+      this.#getRelativeTileObject(pCurrentTile, "bottom"),
+      this.#getRelativeTileObject(pCurrentTile, "left"),
+      this.#getRelativeTileObject(pCurrentTile, "right"),
     ];
 
     neighborhood.forEach((neighbor) => {
@@ -122,12 +122,12 @@ class Game {
     return emptyNeighbors;
   };
 
-  #searchDuplicates = (object, arr) => {
-    return arr.some((item) => {
+  #searchDuplicates = (pObject, pArr) => {
+    return pArr.some((item) => {
       let isEqual = true;
       // compare every key value pair
-      Object.keys(object).forEach(function (key) {
-        if (item[key] !== object[key]) {
+      Object.keys(pObject).forEach(function (key) {
+        if (item[key] !== pObject[key]) {
           isEqual = false;
         }
       });
@@ -137,13 +137,13 @@ class Game {
 
    // Public methods
 
-  displayMineField = (visible) => {
+  displayMineField = (pVisible) => {
     let markup = "";
     for (let i = 0; i < this.#minefield.length; i++) {
       markup += `<tr id="row${i}">\n`;
       for (let j = 0; j < this.#minefield.length; j++) {
         markup += "<td id=col" + j + ">";
-        if (visible) markup += this.#minefield[i][j];
+        if (pVisible) markup += this.#minefield[i][j];
         markup += "</td>";
       }
       markup += "\n</tr>\n";
@@ -159,17 +159,17 @@ class Game {
     return false;
   };
 
-  getValue = (row, col) => this.#minefield[row][col];
+  getValue = (pRow, pCol) => this.#minefield[pRow][pCol];
 
   getMinefieldSize = () => this.#minefield.length;
 
   // Breadth first search
-  findConnectedEmptyTiles = (currentTile) => {
+  findConnectedEmptyTiles = (pCurrentTile) => {
     let queue = new Queue();
     let searched = [];
 
     // add current cell to queue
-    queue.add(currentTile);
+    queue.add(pCurrentTile);
 
     while (queue.size() > 0) {
       // if last in queue is not already searched
@@ -192,7 +192,7 @@ class Game {
 
   getScore = () => this.#score;
 
-  setScore = (score) => (this.#score = score);
+  setScore = (pScore) => (this.#score = pScore);
 
   decrementScore = () => {
     if (this.#score > 0) {

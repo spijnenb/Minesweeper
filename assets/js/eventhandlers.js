@@ -68,12 +68,12 @@
 
   /**
    * finds row and column in dom and value in minefield
-   * @param {object} currentTile element of current tile in minefield
+   * @param {object} pCurrentTile element of current tile in minefield
    * @return {object} object with row, column, and value
    */
-  function getTileObject(currentTile) {
-    let row = Number(currentTile.parentElement.id.substr(3));
-    let col = Number(currentTile.id.substr(3));
+  function getTileObject(pCurrentTile) {
+    let row = Number(pCurrentTile.parentElement.id.substr(3));
+    let col = Number(pCurrentTile.id.substr(3));
     return {
       row: row,
       col: col,
@@ -128,7 +128,7 @@
    * @param {boolean} winOrLose 
    */
 
-  function gameOver(winOrLose) {
+  function gameOver(pWinOrLose) {
     // display table again, without click events
     grid.innerHTML = "<table>" + game.displayMineField(true) + "</table>";
     let tiles = Array.from(grid.querySelectorAll("td"));
@@ -144,14 +144,14 @@
     });
 
     // display game over
-    showMessage(winOrLose);
+    showMessage(pWinOrLose);
     
     // end timer
     clearInterval(startCounting);
   }
 
-  function plantFlag(event) {
-    event.preventDefault();
+  function plantFlag(pEvent) {
+    pEvent.preventDefault();
     let icon = `<i class="fas fa-flag"></i>`;
     let tile = getTileObject(this);
     this.innerHTML = (this.innerHTML !== icon) ? icon : "";
@@ -165,13 +165,13 @@
     displayMessage.addEventListener("transitionend", () => displayMessage.remove());
   }
 
-  function showMessage(winOrLose) {
+  function showMessage(pWinOrLose) {
     // create game window
     let msg = document.createElement("div");
     // set content
     let msgText = {};
     let score = (game instanceof Game) ? game.getScore() : 0;
-    if (winOrLose) {
+    if (pWinOrLose) {
       msgText.title = "Victory!";
       msgText.body = "Good job. Your score is " + score;
     } else {
@@ -243,9 +243,9 @@
    * @param {string} oldClass
    * @param {string} newClass 
    */
-  function replaceClass(element, oldClass, newClass) {
-    element.classList.remove(oldClass);
-    element.classList.add(newClass);
+  function replaceClass(pElement, pOldClass, pNewClass) {
+    pElement.classList.remove(pOldClass);
+    pElement.classList.add(pNewClass);
   }
 
   // events
