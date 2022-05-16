@@ -1,6 +1,6 @@
 // IIFE to keep global scope empty
 
-(function(window, document){
+(function(document){
 
   // selectors
 
@@ -257,5 +257,5 @@
   darkModeButton.addEventListener("click", toggleDarkMode);
 
 
-})(window, document);
+})(document);
 
